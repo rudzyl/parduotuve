@@ -50,7 +50,7 @@ class MakerController extends Controller
         $maker = new Maker;
         $maker->name = $request->maker_name;
         $maker->save();
-        return redirect()->route('maker.index');
+        return redirect()->route('maker.index')->with('success_message', 'Maker was made.');
         
     }
 
@@ -90,9 +90,13 @@ class MakerController extends Controller
            'maker_name' => ['required', 'min:3', 'max:64']
        ]
        );
+       if ($validator->fails()) {
+        $request->flash();
+        return redirect()->back()->withErrors($validator);
+        }
        $maker->name = $request->maker_name;
        $maker->save();
-       return redirect()->route('maker.index');
+       return redirect()->route('maker.index')->with('success_message', 'Maker was updated.');
     }
 
     /**
@@ -104,9 +108,9 @@ class MakerController extends Controller
     public function destroy(Maker $maker)
     {
         if($maker->makerCars->count()){
-            return 'No deleto';
+            return redirect()->route('maker.index')->with('info_message', 'No deleto.');
         }
         $maker->delete();
-        return redirect()->route('maker.index');
+        return redirect()->route('maker.index')->with('success_message', 'Maker was deleted.');
     }
 }

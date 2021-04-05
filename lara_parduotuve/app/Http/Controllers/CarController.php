@@ -43,16 +43,19 @@ class CarController extends Controller
        [
            'car_name' => ['required', 'min:3', 'max:64'],
            'car_plate' => ['required', 'min:3', 'max:64'],
-           'car_about' => ['required', 'min:3', 'max:64'],
        ]
        );
+       if ($validator->fails()) {
+           $request->flash();
+           return redirect()->back()->withErrors($validator);
+       }
         $car = new Car;
         $car->name = $request->car_name;
         $car->plate = $request->car_plate;
         $car->about = $request->car_about;
         $car->maker_id = $request->maker_id;
         $car->save();
-        return redirect()->route('car.index');
+        return redirect()->route('car.index')->with('success_message', 'Car was created.');
 
     }
 
@@ -88,12 +91,22 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'car_name' => ['required', 'min:3', 'max:64'],
+            'car_plate' => ['required', 'min:3', 'max:64'],
+        ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
        $car->name = $request->car_name;
        $car->plate = $request->car_plate;
        $car->about = $request->car_about;
        $car->maker_id = $request->maker_id;
        $car->save();
-       return redirect()->route('car.index');
+       return redirect()->route('car.index')->with('success_message', 'Car was updated.');
     }
 
     /**
@@ -105,6 +118,6 @@ class CarController extends Controller
     public function destroy(Car $car)
     {
         $car->delete();
-       return redirect()->route('car.index');
+        return redirect()->route('car.index')->with('success_message', 'Car was deleted.');
     }
 }
