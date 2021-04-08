@@ -14,10 +14,31 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cars = Car::all();
-       return view('car.index', ['cars' => $cars]);
+        // if ($request->sort && 'asc' == $request->sort) {
+        //     $cars = $cars->sortBy('name');
+        //     $sortBy = 'asc';
+        // }
+        // elseif ($request->sort && 'desc' == $request->sort) {
+        //     $cars = $cars->sortByDesc('name');
+        //     $sortBy = 'desc';
+        // }
+        $makers = Maker::all();
+        if ($request->maker_id) {
+            $cars = Car::where('maker_id',$request->maker_id)->get();
+            $filterBy = $request->maker_id;
+        }
+        else {
+            $cars = Car::all();
+        }
+        
+    return view('car.index', [
+        'cars' => $cars, 
+        'makers' => $makers,
+        'filterBy'=> $filterBy ?? 0
+        ]);
+
     }
 
     /**
@@ -43,18 +64,22 @@ class CarController extends Controller
        [
            'car_name' => ['required', 'min:3', 'max:64'],
            'car_plate' => ['required', 'min:3', 'max:64'],
-       ]
+       ],
+       [
+        'car_name.required' => 'Please enter the name',
+        'car_name.min' => 'can not be shorter than 3 numbers'
+       ],
+
+       [
+        'car_plate.required' => 'Please enter the palete',
+        'car_plate.min' => 'can not be shorter than 3 numbers'
+       ]        
        );
        if ($validator->fails()) {
-           $request->flash();
+           $request->flash(); // trumpam prisimena 
            return redirect()->back()->withErrors($validator);
        }
-        $car = new Car;
-        $car->name = $request->car_name;
-        $car->plate = $request->car_plate;
-        $car->about = $request->car_about;
-        $car->maker_id = $request->maker_id;
-        $car->save();
+        Car::new()->refreshAndSave($request);
         return redirect()->route('car.index')->with('success_message', 'Car was created.');
 
     }
@@ -95,17 +120,22 @@ class CarController extends Controller
         [
             'car_name' => ['required', 'min:3', 'max:64'],
             'car_plate' => ['required', 'min:3', 'max:64'],
-        ]
+        ],
+        [
+            'car_name.required' => 'Please enter the name',
+            'car_name.min' => 'can not be shorter than 3 numbers'
+        ],
+    
+        [
+            'car_plate.required' => 'Please enter the palete',
+            'car_plate.min' => 'can not be shorter than 3 numbers'
+        ] 
         );
         if ($validator->fails()) {
             $request->flash();
             return redirect()->back()->withErrors($validator);
         }
-       $car->name = $request->car_name;
-       $car->plate = $request->car_plate;
-       $car->about = $request->car_about;
-       $car->maker_id = $request->maker_id;
-       $car->save();
+       $car->refreshAndSave($request);
        return redirect()->route('car.index')->with('success_message', 'Car was updated.');
     }
 

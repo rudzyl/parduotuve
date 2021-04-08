@@ -5,7 +5,28 @@
     <div class="row justify-content-center">
         <div class="col-md-11">
             <div class="card">
-                <div class="card-header">Cars List</div>
+                <div class="card-header">
+                    <h2>Cars List</h2>
+                    <div class="make-inline">
+                        {{-- su class make inline sutvarkom graziai --}}
+                        <form action="{{route('car.index')}}" method="get" class="make-inline">
+                            <div class="form-group make-inline">
+                                <label> Maker: </label>
+                                <select class="form-control" name="maker_id">
+                                    <option value="0" disabled @if($filterBy==0) selected @endif>Select Maker</option>
+                                    @foreach ($makers as $maker)
+                                    <option value="{{$maker->id}}" @if($filterBy==$maker->id) selected @endif>
+                                        {{$maker->name}}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-info">FILTER</button>
+                        </form>
+
+                        <a href="{{route('car.index')}}" class="btn btn-primary"> Clear filter</a>
+                    </div>
+                </div>
                 <div class="card-body">
                     <ul class="list-group">
                         <div class="card-body">

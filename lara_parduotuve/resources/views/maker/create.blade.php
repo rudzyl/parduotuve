@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Create Maker</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{route('maker.store')}}">
                         Name: <input type="text" name="maker_name" value="{{old('maker_name')}}">

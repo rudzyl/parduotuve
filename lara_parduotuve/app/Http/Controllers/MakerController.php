@@ -13,10 +13,12 @@ class MakerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $makers = Maker::all();
-       return view('maker.index', ['makers' => $makers]);
+        // $makers = Maker::all();
+        //rusiavimas basik
+        $makers = $request->sort ? Maker::orderBy('name')->get() : Maker::all();
+        return view('maker.index', ['makers' => $makers]);
     }
 
     /**
@@ -40,17 +42,20 @@ class MakerController extends Controller
         $validator = Validator::make($request->all(),
        [
            'maker_name' => ['required', 'min:3', 'max:64'],
+       ],
+       [
+        'maker_name.required' => 'Please enter the name',
+        'maker_name.min' => 'can not be shorter than 3 numbers'
        ]
+
        );
        if ($validator->fails()) {
            $request->flash();
            return redirect()->back()->withErrors($validator);
        }
 
-        $maker = new Maker;
-        $maker->name = $request->maker_name;
-        $maker->save();
-        return redirect()->route('maker.index')->with('success_message', 'Maker was made.');
+       Maker::new()->refreshAndSave($request);
+       return redirect()->route('maker.index')->with('success_message', 'Maker was made.');
         
     }
 
@@ -88,14 +93,17 @@ class MakerController extends Controller
         $validator = Validator::make($request->all(),
        [
            'maker_name' => ['required', 'min:3', 'max:64']
+       ],
+       [
+        'maker_name.required' => 'Please enter the name',
+        'maker_name.min' => 'can not be shorter than 3 numbers'
        ]
        );
        if ($validator->fails()) {
         $request->flash();
         return redirect()->back()->withErrors($validator);
         }
-       $maker->name = $request->maker_name;
-       $maker->save();
+        $maker->refreshAndSave($request);
        return redirect()->route('maker.index')->with('success_message', 'Maker was updated.');
     }
 

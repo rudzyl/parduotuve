@@ -14,8 +14,6 @@
     &_car {
         display: flex;
         flex-direction: column;
-
-
     }
 
     &_title {
@@ -28,4 +26,20 @@
         font-style: italic;
     }
 
+}
+
+.make-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    select,
+    label,
+    input {
+        margin: 0 6px;
+    }
+
+    &.form-group {
+        margin-bottom: 0;
+    }
 }

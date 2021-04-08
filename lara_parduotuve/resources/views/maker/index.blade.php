@@ -5,7 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-11">
             <div class="card">
-                <div class="card-header">Makers List</div>
+                <div class="card-header">
+                    <h2>Makers List</h2>
+                    <a href="{{route('maker.index', ['sort' => 'name'])}}" class="btn btn-primary"> Sort by name</a>
+                    <a href="{{route('maker.index')}}" class="btn btn-primary"> Default</a>
+                </div>
                 <div class="card-body">
                     <ul class="list-group">
                         <div class="card-body">
