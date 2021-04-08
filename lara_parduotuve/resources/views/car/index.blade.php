@@ -10,8 +10,11 @@
                     <ul class="list-group">
                         <div class="card-body">
                             @foreach ($cars as $car)
+                            {{-- list-line kad graziai lygiuotu --}}
                             <li class="list-group-item list-line">
-                                <div class="list-line_books">
+                                {{-- Antraste --}}
+                                <div class="list-line_car">
+                                    {{-- pavadinimas --}}
                                     <div class="list-line_title">
                                         {{$car->name}}
                                     </div>
@@ -19,15 +22,17 @@
                                         {{$car->carMaker->name}}
                                     </div>
                                 </div>
+                                {{-- sulygiuojam mygtukus _button --}}
                                 <div class="list-line_button">
-                                    <a href="{{route('car.edit',[$car])}}">EDIT</a>
+                                    <a href="{{route('car.edit',[$car])}}" class="btn btn-primary">EDIT</a>
                                     <form method="POST" action="{{route('car.destroy', [$car])}}">
                                         @csrf
-                                        <button type="submit">DELETE</button>
+                                        <button class="btn btn-danger" type="submit">DELETE</button>
                                     </form>
                                 </div>
                             </li>
                             @endforeach
+                        </div>
                     </ul>
                 </div>
             </div>

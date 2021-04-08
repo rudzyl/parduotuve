@@ -31,7 +31,7 @@
                             </select>
                         </div>
                         @csrf
-                        <button type="submit">ADD</button>
+                        <button class="btn btn-success" type="submit">ADD</button>
                     </form>
                 </div>
             </div>
@@ -39,7 +39,7 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
+    window.addEventListener('DOMContentLoaded', (event) => {
         $('#summernote').summernote();
     });
 

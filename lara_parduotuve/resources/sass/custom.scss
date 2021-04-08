@@ -1,0 +1,31 @@
+.list-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &_button {
+        display: flex;
+
+        &>* {
+            margin: 5px;
+        }
+    }
+
+    &_car {
+        display: flex;
+        flex-direction: column;
+
+
+    }
+
+    &_title {
+        font-weight: bold;
+    }
+
+    &_author {
+        color: gray;
+        font-size: 80%;
+        font-style: italic;
+    }
+
+}

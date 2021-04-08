@@ -10942,4 +10942,33 @@ a.text-dark:focus {
   }
 }
 
+.list-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-line_button {
+  display: flex;
+}
+
+.list-line_button > * {
+  margin: 5px;
+}
+
+.list-line_car {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-line_title {
+  font-weight: bold;
+}
+
+.list-line_author {
+  color: gray;
+  font-size: 80%;
+  font-style: italic;
+}
+
 
