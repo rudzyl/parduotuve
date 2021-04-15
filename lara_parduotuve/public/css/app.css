@@ -10987,4 +10987,8 @@ a.text-dark:focus {
   margin-bottom: 0;
 }
 
+.paginate-col {
+  margin: 12px 0;
+}
+
 

@@ -26,11 +26,13 @@ class CarController extends Controller
         // }
         $makers = Maker::all();
         if ($request->maker_id) {
-            $cars = Car::where('maker_id',$request->maker_id)->get();
+            $cars = Car::where('maker_id',$request->maker_id)->paginate(3);
             $filterBy = $request->maker_id;
+            $cars->appends(['maker_id'=> $request->maker_id]);
         }
         else {
-            $cars = Car::all();
+            // $cars = Car::all();
+            $cars = Car::paginate(5);
         }
         
     return view('car.index', [

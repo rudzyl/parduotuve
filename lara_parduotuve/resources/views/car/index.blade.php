@@ -46,7 +46,7 @@
                                 {{-- sulygiuojam mygtukus _button --}}
                                 <div class="list-line_button">
                                     <a href="{{route('car.edit',[$car])}}" class="btn btn-primary">EDIT</a>
-                                    <form method="POST" action="{{route('car.destroy', [$car])}}">
+                                    <form method="POST" class="car-delete" action="{{route('car.destroy', [$car])}}">
                                         @csrf
                                         <button class="btn btn-danger" type="submit">DELETE</button>
                                     </form>
@@ -55,6 +55,9 @@
                             @endforeach
                         </div>
                     </ul>
+                    <div class="paginate-col">
+                        {{$cars->onEachSide(2)->links()}}
+                    </div>
                 </div>
             </div>
         </div>

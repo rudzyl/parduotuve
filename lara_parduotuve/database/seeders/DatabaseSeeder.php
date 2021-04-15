@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         $faker = Faker::create('lt_LT');
         $fakerCar = (new \Faker\Factory())::create();
         $fakerCar->addProvider(new \Faker\Provider\Fakecar($fakerCar));
-        $makers = 5;
-        $cars = 5;
+        $makers = 10;
+        $cars = 30;
         foreach(range(1, $makers) as $_) {
             DB::table('makers')->insert([
                 'name' => $faker->firstName(),
